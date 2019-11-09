@@ -13,8 +13,11 @@
 
 <b>Langkah 3</b> Hitung pembagian IP berdasarkan NID dan netmask 192.168.0.0/19 menggunakan pohon dan Lakukan subnetting dengan menggunakan pohon tersebut untuk pembagian IP sesuai dengan kebutuhan masing-masing subnet yang ada.
 
+![vlsm hitung](https://user-images.githubusercontent.com/45744801/68526951-09fc9980-0314-11ea-851e-441b2b310202.jpg)
 
+khusus IP server menggunakan IP DMZ yaitu, 10.151.73.64/29.
 
+![image](https://user-images.githubusercontent.com/45744801/68527040-22b97f00-0315-11ea-9b23-0eef388c177e.png)
 
 ### konfigurasi VLSM di CISCO PACKET TRACER ( CPT )
 
@@ -48,4 +51,65 @@ Pada static routing juga dibutuhkan default routing agar router dapat mengirimka
 
 ![image](https://user-images.githubusercontent.com/45744801/68526866-fa308580-0312-11ea-81b7-a309ac4d64c6.png)
 
+Agar semua subnet dapat saling terhubung, tambahkan static routing berikut :
 
+1. Pada PIKACHU
+``
+192.168.31.108/30 via 192.168.31.106
+192.168.31.80/29 via 192.168.31.106
+192.168.31.0/26 via 192.168.31.106
+192.168.0.0/21 via 192.168.31.106
+192.168.31.88/30 via 192.168.31.106
+192.168.28.0/23 via 192.168.31.106
+192.168.20.0/22 via 192.168.31.106 
+192.168.31.64/28 via 192.168.31.106
+192.168.24.0/23 via 192.168.31.106
+192.168.31.92/30 via 192.168.31.102
+192.168.30.0/24 via 192.168.31.102
+192.168.31.96/30 via 192.168.31.102
+192.168.26.0/23 via 192.168.31.102
+192.168.16.0/22 via 192.168.31.102
+192.168.8.0/21 via 192.168.31.102
+10.151.73.68/30 via 192.168.31.102
+``
+2. Pada VENUSAUR
+``
+192.168.30.0/24 via 192.168.31.94
+192.168.26.0/23 via 192.168.31.98
+192.168.16.0/22 via 192.168.31.98
+192.168.8.0/21 via 192.168.31.98
+10.151.73.68/30 via 192.168.31.98
+0.0.0.0/0 via 192.168.31.101
+``
+3. Pada CHARIZARD
+``
+0.0.0.0/0 via 192.168.31.93
+``
+4. Pada ARCEUS
+``
+0.0.0.0/0 via 192.168.31.97
+``
+5. Pada BLASTOISE
+``
+192.168.31.80/29 via 192.168.31.110
+192.168.31.0/26 via 192.168.31.110
+192.168.28.0/23 via 192.168.31.90
+192.168.20.0/22 via 192.168.31.90
+192.168.31.64/28 via 192.168.31.90
+192.168.24.0/23 via 192.168.31.90
+0.0.0.0/0 via 192.168.31.105
+``
+6. Pada GIRATINA
+``
+0.0.0.0/0 via 192.168.31.109
+``
+7. Pada LUGIA
+``
+0.0.0.0/0 via 192.168.31.89
+192.168.24.0/23 via 192.168.20.3
+192.168.31.64/28 via 192.168.20.3
+``
+8. PadA DIALGA
+``
+0.0.0.0/0 via 192.168.20.1
+``
