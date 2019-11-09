@@ -7,11 +7,11 @@
 
 ![image](https://user-images.githubusercontent.com/45744801/68526375-a4a5aa00-030d-11ea-9ec0-5f85f3a679cb.png)
 
-<b>Langkah 2</b>-Tentukan jumlah alamat IP yang dibutuhkan oleh tiap subnet dan lakukan labelling netmask berdasarkan jumlah IP yang dibutuhkan.
+<b>Langkah 2</b>-Tentukan jumlah alamat IP yang dibutuhkan oleh tiap subnet dan lakukan labelling netmask berdasarkan jumlah IP yang dibutuhkan. 
 
 ![image](https://user-images.githubusercontent.com/45744801/68526465-c05d8000-030e-11ea-82f1-649d9c78e479.png)
 
-<b>Langkah 3</b> Hitung pembagian IP berdasarkan NID dan netmask 192.168.0.0/19 menggunakan pohon dan Lakukan subnetting dengan menggunakan pohon tersebut untuk pembagian IP sesuai dengan kebutuhan masing-masing subnet yang ada.
+<b>Langkah 3</b>-Hitung pembagian IP berdasarkan NID dan netmask 192.168.0.0/19 menggunakan pohon dan Lakukan subnetting dengan menggunakan pohon tersebut untuk pembagian IP sesuai dengan kebutuhan masing-masing subnet yang ada.
 
 ![vlsm hitung](https://user-images.githubusercontent.com/45744801/68526951-09fc9980-0314-11ea-851e-441b2b310202.jpg)
 
@@ -42,6 +42,8 @@ Atur IP pada client PIPLUP yang mengarah ke CHARIZARD seperti gambar dibawah.
 ![image](https://user-images.githubusercontent.com/45744801/68526808-38797500-0312-11ea-9021-85bf9e26d949.png)
 
 Lakukan hal yang sama untuk mengatur alamat IP setiap interface pada device yang ada dalam topologi.
+
+note : CLOUD diberikan IP TUNTAP
 
 <b>langkah 5</b>-Routing setiap router yang ada. Routing dapat dilakukan pada menu Config > Routing > Static pada device Router. Lalu isi Static Routes seperti gambar dibawah pada PIKACHU dan tekan tombol Add
 
@@ -128,3 +130,17 @@ Agar semua subnet dapat saling terhubung, tambahkan static routing berikut :
 ``
 0.0.0.0/0 via 192.168.20.1
 ``
+
+## perhitungan CIDR
+
+<b>Langkah 1</b>-Tentukan subnet yang ada dalam topologi dan lakukan labelling netmask terhadap masing-masing subnet. Contohnya dapat dilihat pada gambar berikut.
+
+![image](https://user-images.githubusercontent.com/45744801/68526375-a4a5aa00-030d-11ea-9ec0-5f85f3a679cb.png)
+
+<b>Langkah 2</b>-Gabungkan subnet paling bawah di dalam topologi. Paling bawah berarti subnet yang paling jauh dari internet (gambar awan). netmask yang dipakai adalah netmask terbesar dari penggabungan subnet di naikin 1. contoh A16 /28 dan A17 /23 maka netmask penggabungan menjadi /24. Lalu ulangi langkah tersebut sampai menjadi sebuah subnet besar yang mencakup 1 topologi yang kita miliki.
+
+<b>Langkah 3</b>-Dari proses penggabungan yang telah dilakukan, didapatkan sebuah subnet besar dengan netmask /16. Kali ini dapat menggunakan NID 192.168.0.0/16.
+
+<b>Langkah 4</b>-Hitung pembagian IP dengan pohon berdasarkan penggabungan subnet yang telah dilakukan.
+
+![cidr](https://user-images.githubusercontent.com/45744801/68527752-294bf480-031d-11ea-9bcf-055cbb815b39.jpg)
