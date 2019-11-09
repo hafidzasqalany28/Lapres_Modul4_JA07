@@ -144,3 +144,99 @@ Agar semua subnet dapat saling terhubung, tambahkan static routing berikut :
 <b>Langkah 4</b>-Hitung pembagian IP dengan pohon berdasarkan penggabungan subnet yang telah dilakukan.
 
 ![cidr](https://user-images.githubusercontent.com/45744801/68527752-294bf480-031d-11ea-9bcf-055cbb815b39.jpg)
+
+### konfigurasi CIDR di UML
+<b>Langkah 1</b>-membuat topologi sesuai dengan soal.
+
+<b>Langkah 2</b>-bash topologi.
+
+<b>Langkah 3</b>-login setiap UML.
+
+<b>Langkah 4</b>-bash topologi.
+
+<b>Langkah 5</b>-Pada semua router lakukan setting sysctl dengan mengetikkan perintah nano `/etc/sysctl.conf`. Hilangkan tanda pagar (#) pada bagian `net.ipv4.ip_forward=1`. lalu ketikkan `sysctl -p` untuk mengaktifkan perubahan yang ada. Dengan mengaktifkan fungsi IP Forward ini maka Linux nantinya dapat menentukan jalur mana yang dipilih untuk mencapai jaringan tujuan.
+
+<b>Langkah 6</b>-Setting IP pada setiap UML dengan mengetikkan nano /etc/network/interfaces Lalu setting IPnya sebagai berikut:
+
+(Sebagai Router)
+
+PIKACHU 
+```
+```
+
+VENUSAUR
+```
+```
+CHARIZARD
+```
+```
+ARCEUS
+```
+```
+BLASTOISE
+```
+```
+GIRATINA
+```
+```
+LUGIA
+```
+```
+(sebagai server )
+
+ARTICUNO
+```
+```
+MEWTWO
+```
+```
+(sebagai client )
+
+PIPLUP
+```
+```
+PYSDUCK
+```
+```
+SNORLAX
+```
+```
+CUBONE
+```
+```
+SLOWBRO
+```
+```
+ABRA
+```
+```
+KADABRA
+```
+```
+SWABLU
+```
+```
+HOOTHOOT
+```
+```
+SLOWBRO
+```
+```
+BEWEAR
+```
+```
+BUIZEL
+```
+```
+ARON
+```
+```
+
+<b>Langkah 7</b>-Restart network setiap uml dengan mengetikkan `service networking restart`.
+
+<b>Langkah 8</b>-Ketikkan `iptables –t nat –A POSTROUTING –o eth0 –j MASQUERADE –s 192.168.0.0/16` pada router PIKACHU agar bisa terhubung ke jaringan luar. 
+
+<b>Langkah 9</b>-routing semua router uml. routing dapat dilakukan pada device router dengan perintah :
+``
+route add -net <NID subnet> netmask <netmask> gw <IP gateway>
+``
