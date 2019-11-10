@@ -137,7 +137,7 @@ Agar semua subnet dapat saling terhubung, tambahkan static routing berikut :
 
 ![image](https://user-images.githubusercontent.com/45744801/68526375-a4a5aa00-030d-11ea-9ec0-5f85f3a679cb.png)
 
-<b>Langkah 2</b>-Gabungkan subnet paling bawah di dalam topologi. Paling bawah berarti subnet yang paling jauh dari internet (gambar awan). netmask yang dipakai adalah netmask terbesar dari penggabungan subnet di naikin 1. contoh A16 /28 dan A17 /23 maka netmask penggabungan menjadi /24. Lalu ulangi langkah tersebut sampai menjadi sebuah subnet besar yang mencakup 1 topologi yang kita miliki.
+<b>Langkah 2</b>-Gabungkan subnet paling bawah di dalam topologi. Paling bawah berarti subnet yang paling jauh dari internet (gambar awan). netmask yang dipakai adalah netmask terbesar dari penggabungan subnet di naikin 1. contoh A16 /28 dan A17 /23 maka netmask penggabungan menjadi /24. Lalu ulangi langkah tersebut sampai menjadi sebuah subnet besar yang mencakup 1 topologi yang kita miliki. Maka didapat netmask /16.
 
 <b>Langkah 3</b>-Dari proses penggabungan yang telah dilakukan, didapatkan sebuah subnet besar dengan netmask /16. Kali ini dapat menggunakan NID 192.168.0.0/16.
 
@@ -147,16 +147,65 @@ Agar semua subnet dapat saling terhubung, tambahkan static routing berikut :
 
 ### konfigurasi CIDR di UML
 <b>Langkah 1</b>-membuat topologi sesuai dengan soal.
+```
+# Switch
+uml_switch -unix switch0 > /dev/null < /dev/null &
+uml_switch -unix switch1 > /dev/null < /dev/null &
+uml_switch -unix switch2 > /dev/null < /dev/null &
+uml_switch -unix switch3 > /dev/null < /dev/null &
+uml_switch -unix switch4 > /dev/null < /dev/null &
+uml_switch -unix switch5 > /dev/null < /dev/null &
+uml_switch -unix switch6 > /dev/null < /dev/null &
+uml_switch -unix switch7 > /dev/null < /dev/null &
+uml_switch -unix switch8 > /dev/null < /dev/null &
+uml_switch -unix switch9 > /dev/null < /dev/null &
+uml_switch -unix switch10 > /dev/null < /dev/null &
+uml_switch -unix switch11 > /dev/null < /dev/null &
+uml_switch -unix switch12 > /dev/null < /dev/null &
+
+uml_switch -unix switch13 > /dev/null < /dev/null &
+uml_switch -unix switch14 > /dev/null < /dev/null &
+uml_switch -unix switch15 > /dev/null < /dev/null &
+uml_switch -unix switch16 > /dev/null < /dev/null &
+uml_switch -unix switch17 > /dev/null < /dev/null &
+uml_switch -unix switch18 > /dev/null < /dev/null &
+
+# Router
+xterm -T PIKACHU -e linux ubd0=PIKACHU,jarkom umid=PIKACHU eth0=tuntap,,,10.151.72.8 eth1=daemon,,,switch0 eth2=daemon,,,switch13 eth3=daemon,,,switch14 mem=64M &
+xterm -T VENOSAUR -e linux ubd0=VENOSAUR,jarkom umid=VENOSAUR eth0=daemon,,,switch13 eth1=daemon,,,switch15 eth2=daemon,,,switch16 mem=64M &
+xterm -T CHARIZARD -e linux ubd0=CHARIZARD,jarkom umid=CHARIZARD eth0=daemon,,,switch15 eth1=daemon,,,switch1 mem=64M &
+xterm -T ARCEUS -e linux ubd0=ARCEUS,jarkom umid=ARCEUS eth0=daemon,,,switch16 eth1=daemon,,,switch2 eth2=daemon,,,switch3 eth3=daemon,,,switch4 eth4=daemon,,,switch5 mem=64M &
+xterm -T BLASTOISE -e linux ubd0=BLASTOISE,jarkom umid=BLASTOISE eth0=daemon,,,switch14 eth1=daemon,,,switch17 eth2=daemon,,,switch18 eth3=daemon,,,switch6 mem=64M &
+xterm -T LUGIA -e linux ubd0=LUGIA,jarkom umid=LUGIA eth0=daemon,,,switch17 eth1=daemon,,,switch7 eth2=daemon,,,switch8 mem=64M &
+xterm -T GIRATINA -e linux ubd0=GIRATINA,jarkom umid=GIRATINA eth0=daemon,,,switch18 eth1=daemon,,,switch12 eth2=daemon,,,switch11 mem=64M &
+xterm -T DIALGA -e linux ubd0=DIALGA,jarkom umid=DIALGA eth0=daemon,,,switch8 eth1=daemon,,,switch9 eth2=daemon,,,switch10 mem=64M &
+
+# DNS + Web Server
+xterm -T ARTICUNO -e linux ubd0=ARTICUNO,jarkom umid=ARTICUNO eth0=daemon,,,switch0 mem=64M &
+xterm -T MEWTWO -e linux ubd0=MEWTWO,jarkom umid=MEWTWO eth0=daemon,,,switch2 mem=64M &
+
+# Klien
+xterm -T PIPLUP -e linux ubd0=PIPLUP,jarkom umid=PIPLUP eth0=daemon,,,switch1 mem=64M &
+xterm -T PSYDUCK -e linux ubd0=PSYDUCK,jarkom umid=PSYDUCK eth0=daemon,,,switch3 mem=64M &
+xterm -T SNORLAX -e linux ubd0=SNORLAX,jarkom umid=SNORLAX eth0=daemon,,,switch4 mem=64M &
+xterm -T CUBONE -e linux ubd0=CUBONE,jarkom umid=CUBONE eth0=daemon,,,switch5 mem=64M &
+xterm -T SLOWBRO -e linux ubd0=SLOWBRO,jarkom umid=SLOWBRO eth0=daemon,,,switch8 mem=64M &
+xterm -T BEWEAR -e linux ubd0=BEWEAR,jarkom umid=BEWEAR eth0=daemon,,,switch10 mem=64M &
+xterm -T BUIZEL -e linux ubd0=BUIZEL,jarkom umid=BUIZEL eth0=daemon,,,switch10 mem=64M &
+xterm -T ARON -e linux ubd0=ARON,jarkom umid=ARON eth0=daemon,,,switch9 mem=64M &
+xterm -T HOOTHOOT -e linux ubd0=HOOTHOOT,jarkom umid=HOOTHOOT eth0=daemon,,,switch7 mem=64M &
+xterm -T SWABLU -e linux ubd0=SWABLU,jarkom umid=SWABLU eth0=daemon,,,switch6 mem=64M &
+xterm -T KADABRA -e linux ubd0=KADABRA,jarkom umid=KADABRA eth0=daemon,,,switch11 mem=64M &
+xterm -T ABRA -e linux ubd0=ABRA,jarkom umid=ABRA eth0=daemon,,,switch12 mem=64M &
+```
 
 <b>Langkah 2</b>-bash topologi.
 
 <b>Langkah 3</b>-login setiap UML.
 
-<b>Langkah 4</b>-bash topologi.
+<b>Langkah 4</b>-Pada semua router lakukan setting sysctl dengan mengetikkan perintah nano `/etc/sysctl.conf`. Hilangkan tanda pagar (#) pada bagian `net.ipv4.ip_forward=1`. lalu ketikkan `sysctl -p` untuk mengaktifkan perubahan yang ada. Dengan mengaktifkan fungsi IP Forward ini maka Linux nantinya dapat menentukan jalur mana yang dipilih untuk mencapai jaringan tujuan.
 
-<b>Langkah 5</b>-Pada semua router lakukan setting sysctl dengan mengetikkan perintah nano `/etc/sysctl.conf`. Hilangkan tanda pagar (#) pada bagian `net.ipv4.ip_forward=1`. lalu ketikkan `sysctl -p` untuk mengaktifkan perubahan yang ada. Dengan mengaktifkan fungsi IP Forward ini maka Linux nantinya dapat menentukan jalur mana yang dipilih untuk mencapai jaringan tujuan.
-
-<b>Langkah 6</b>-Setting IP pada setiap UML dengan mengetikkan nano /etc/network/interfaces Lalu setting IPnya sebagai berikut:
+<b>Langkah 5</b>-Setting IP pada setiap UML dengan mengetikkan nano /etc/network/interfaces Lalu setting IPnya sebagai berikut:
 
 (Sebagai Router)
 
@@ -232,11 +281,11 @@ ARON
 ```
 ```
 
-<b>Langkah 7</b>-Restart network setiap uml dengan mengetikkan `service networking restart`.
+<b>Langkah 6</b>-Restart network setiap uml dengan mengetikkan `service networking restart`.
 
-<b>Langkah 8</b>-Ketikkan `iptables –t nat –A POSTROUTING –o eth0 –j MASQUERADE –s 192.168.0.0/16` pada router PIKACHU agar bisa terhubung ke jaringan luar. 
+<b>Langkah 7</b>-Ketikkan `iptables –t nat –A POSTROUTING –o eth0 –j MASQUERADE –s 192.168.0.0/16` pada router PIKACHU agar bisa terhubung ke jaringan luar. 
 
-<b>Langkah 9</b>-routing semua router uml. routing dapat dilakukan pada device router dengan perintah :
+<b>Langkah 8</b>-routing semua router uml. routing dapat dilakukan pada device router dengan perintah :
 ``
 route add -net <NID subnet> netmask <netmask> gw <IP gateway>
 ``
